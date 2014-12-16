@@ -10,7 +10,13 @@ module.exports = {
 	// Here, the mounted path should be /home/myusername/public_html
 	path: '/home/{{user}}/public_html',
 
-	// Server static options	
+	// Server host
+	host: '10.224.195.49',
+
+	// Server port
+	port: '8083',
+
+	// Server static options
 	serverStatic: {
 
 		// You can get more details here: https://github.com/expressjs/serve-static
@@ -44,7 +50,10 @@ module.exports = {
 
 			// Function to set custom headers on response.
 			// The function is called as fn(res, path, stat)
-			setHeaders: null
+			setHeaders: function(res, path, stat) {
+				res.header("Access-Control-Allow-Origin", "*");
+  				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			}
 		}
 	},
 
