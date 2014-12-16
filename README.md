@@ -9,4 +9,4 @@ Rosie Terra's Front-End development server.
 npm install
 node app
 ```
-**Warning**: Fry is a working progress project  
+**Warning**: Rosie is a working progress project.
