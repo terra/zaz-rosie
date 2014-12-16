@@ -1,8 +1,9 @@
 Rosie
 =========
-
+![rosie](/logo/the-jetsons-rosie.gif)  
 Terra Front-End development server
-![rosie](/logo/the-jetsons-rosie.gif)
+
+**Warning**: Fry is a working progress project  
 
 ## How to run
 ```shell
