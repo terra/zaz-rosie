@@ -1,0 +1,29 @@
+{
+  "name": "zaz-rosie",
+  "version": "0.0.0",
+  "description": "Front-End development server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/terra/zaz-rosie.git"
+  },
+  "keywords": [
+    "server",
+    "frontend",
+    "development"
+  ],
+  "author": "Jaydson Gomes <jayalemao@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terra/zaz-rosie/issues"
+  },
+  "homepage": "https://github.com/terra/zaz-rosie",
+  "dependencies": {
+    "express": "^4.10.6",
+    "serve-index": "^1.5.3",
+    "serve-static": "^1.7.1"
+  }
+}
