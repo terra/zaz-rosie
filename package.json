@@ -24,6 +24,7 @@
   "dependencies": {
     "express": "^4.10.6",
     "serve-index": "^1.5.3",
-    "serve-static": "^1.7.1"
+    "serve-static": "^1.7.1",
+    "finalhandler": "^0.3.2"
   }
 }
