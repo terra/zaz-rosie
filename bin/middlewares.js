@@ -7,7 +7,8 @@ var fs = require('fs'),
 	pathToServe = null,
 	staticServer = null,
 	indexServe = null,
-	user = null;
+	user = null,
+	Rosie = {};
 
 // Native middlewares
 module.exports = function(app) {
@@ -15,13 +16,14 @@ module.exports = function(app) {
 	// Set port to current env or default config
 	app.set('port', process.env.PORT || config.port);
 
-	// Get the path to serve in the given route 
-	// and configure serverStatic and indexStatic
+	Rosie.config = config;
+
+	// Get the path to serve in the given route
 	app.use(config.mainRoute, function(req, res, next) {
 		user = req.params.user;
 		pathToServe	= config.path.replace(/\{\{user\}\}/, user);
-		staticServer = serveStatic(pathToServe, config.serverStatic.options);
-		indexServe = serveIndex(pathToServe, config.serverIndex.options);
+		Rosie.user = user;
+		Rosie.pathToServe = pathToServe;
 		next();
 	})
 
@@ -33,13 +35,14 @@ module.exports = function(app) {
 		if(lastPart) {
 			projectDir = pathToServe + req.url.split('~')[1].split(user)[1];
 			rosieFullPath = projectDir + '/' + rosieFile;
+			Rosie.projectDir = projectDir;
 
 			// Check if the path is a directory
 			if (projectDir &&
 				fs.lstatSync(projectDir).isDirectory() &&
 				fs.existsSync(rosieFullPath)) {
 				try {
-					require(rosieFullPath)();
+					require(rosieFullPath)(Rosie);
 				} catch(error) {
 					console.log(error);
 				}
@@ -47,17 +50,18 @@ module.exports = function(app) {
 		}
 
 		next();
-	})
+	})	
 
-	// Call both serverStatic and indexStatic.
-	// Each one in a separated middleware due to headers issue
+	// Call and configure both serverStatic and indexStatic
 	.use(config.mainRoute, function(req, res, next) {
 		var done = finalhandler(req, res);
+		staticServer = serveStatic(pathToServe, config.serverStatic.options);
+		indexServe = serveIndex(pathToServe, config.serverIndex.options);
 		staticServer(req, res, function onNext(err) {
 			if (err) {
 				return done(err);
 			} else {
-				indexServe(req, res, next);
+				indexServe(req, res, done);
 			}
 		});
 	})
